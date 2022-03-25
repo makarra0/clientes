@@ -1,0 +1,18 @@
+object dmConnection: TdmConnection
+  OldCreateOrder = False
+  Height = 171
+  Width = 274
+  object FDConnection1: TFDConnection
+    ConnectionName = 'C:\Clientes\dbCliente.sdb'
+    Params.Strings = (
+      'DriverID=SQLite')
+    LoginPrompt = False
+    Left = 40
+    Top = 32
+  end
+  object FDTransaction1: TFDTransaction
+    Connection = FDConnection1
+    Left = 128
+    Top = 32
+  end
+end

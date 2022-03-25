@@ -1,0 +1,84 @@
+unit uCustomer;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.DBCtrls, Data.DB, Vcl.StdCtrls,
+  Vcl.Mask, uDmConnection, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls;
+
+type
+  TfrmCustomer = class(TForm)
+    Label1: TLabel;
+    DBEdit1: TDBEdit;
+    dsCustomer: TDataSource;
+    Label2: TLabel;
+    DBEdit2: TDBEdit;
+    Label3: TLabel;
+    DBEdit3: TDBEdit;
+    Label4: TLabel;
+    DBEdit4: TDBEdit;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    DBEdit7: TDBEdit;
+    DBLookupComboBox1: TDBLookupComboBox;
+    dsState: TDataSource;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    DBLookupComboBox2: TDBLookupComboBox;
+    dsCity: TDataSource;
+    Panel1: TPanel;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure DBLookupComboBox2Enter(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCustomer: TfrmCustomer;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmCustomer.BitBtn1Click(Sender: TObject);
+begin
+  ShowMessage('Vai Gravar');
+end;
+
+procedure TfrmCustomer.BitBtn2Click(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TfrmCustomer.DBLookupComboBox2Enter(Sender: TObject);
+begin
+  if DBLookupComboBox1.KeyValue > 0 then
+  begin
+    dmConnection.fdtCity.Filtered := False;
+    dmConnection.fdtCity.Filter := 'uf = ' + DBLookupComboBox1.KeyValue;
+    dmConnection.fdtCity.Filtered := True;
+  end;
+end;
+
+procedure TfrmCustomer.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  dmConnection.fdtState.Close;
+  dmConnection.fdtCity.Close;
+  dmConnection.fdtClient.Close;
+end;
+
+procedure TfrmCustomer.FormCreate(Sender: TObject);
+begin
+  dmConnection.fdtState.Open;
+  dmConnection.fdtCity.Open;
+  dmConnection.fdtClient.Open;
+end;
+
+end.

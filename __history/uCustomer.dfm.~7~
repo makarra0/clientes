@@ -1,0 +1,174 @@
+object frmCustomer: TfrmCustomer
+  Left = 0
+  Top = 0
+  Caption = 'Cliente'
+  ClientHeight = 388
+  ClientWidth = 449
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 32
+    Top = 40
+    Width = 27
+    Height = 13
+    Caption = 'Nome'
+    FocusControl = DBEdit1
+  end
+  object Label2: TLabel
+    Left = 32
+    Top = 80
+    Width = 45
+    Height = 13
+    Caption = 'Endere'#231'o'
+    FocusControl = DBEdit2
+  end
+  object Label3: TLabel
+    Left = 32
+    Top = 119
+    Width = 37
+    Height = 13
+    Caption = 'N'#250'mero'
+    FocusControl = DBEdit3
+  end
+  object Label4: TLabel
+    Left = 120
+    Top = 119
+    Width = 28
+    Height = 13
+    Caption = 'Bairro'
+    FocusControl = DBEdit4
+  end
+  object Label5: TLabel
+    Left = 120
+    Top = 163
+    Width = 33
+    Height = 13
+    Caption = 'Cidade'
+    FocusControl = DBEdit5
+  end
+  object Label6: TLabel
+    Left = 36
+    Top = 163
+    Width = 33
+    Height = 13
+    Caption = 'Estado'
+    FocusControl = DBEdit6
+  end
+  object Label7: TLabel
+    Left = 32
+    Top = 280
+    Width = 42
+    Height = 13
+    Caption = 'Telefone'
+    FocusControl = DBEdit7
+  end
+  object DBEdit1: TDBEdit
+    Left = 32
+    Top = 56
+    Width = 400
+    Height = 21
+    DataField = 'name'
+    DataSource = dsCustomer
+    TabOrder = 0
+  end
+  object DBEdit2: TDBEdit
+    Left = 32
+    Top = 92
+    Width = 400
+    Height = 21
+    DataField = 'address'
+    DataSource = dsCustomer
+    TabOrder = 1
+  end
+  object DBEdit3: TDBEdit
+    Left = 32
+    Top = 136
+    Width = 73
+    Height = 21
+    DataField = 'number'
+    DataSource = dsCustomer
+    TabOrder = 2
+  end
+  object DBEdit4: TDBEdit
+    Left = 120
+    Top = 136
+    Width = 312
+    Height = 21
+    DataField = 'district'
+    DataSource = dsCustomer
+    TabOrder = 3
+  end
+  object DBEdit5: TDBEdit
+    Left = 120
+    Top = 182
+    Width = 199
+    Height = 21
+    DataField = 'city'
+    DataSource = dsCustomer
+    TabOrder = 4
+  end
+  object DBEdit6: TDBEdit
+    Left = 36
+    Top = 182
+    Width = 30
+    Height = 21
+    DataField = 'state'
+    DataSource = dsCustomer
+    TabOrder = 5
+  end
+  object DBEdit7: TDBEdit
+    Left = 32
+    Top = 296
+    Width = 264
+    Height = 21
+    DataField = 'phone'
+    DataSource = dsCustomer
+    TabOrder = 6
+  end
+  object DBLookupComboBox1: TDBLookupComboBox
+    Left = 36
+    Top = 209
+    Width = 145
+    Height = 21
+    DataField = 'state'
+    DataSource = dsCustomer
+    KeyField = 'uf'
+    ListField = 'estado'
+    ListSource = dsState
+    TabOrder = 7
+  end
+  object BitBtn1: TBitBtn
+    Left = 264
+    Top = 344
+    Width = 75
+    Height = 25
+    Caption = 'BitBtn1'
+    TabOrder = 8
+    OnClick = BitBtn1Click
+  end
+  object BitBtn2: TBitBtn
+    Left = 345
+    Top = 344
+    Width = 75
+    Height = 25
+    Caption = 'BitBtn2'
+    TabOrder = 9
+  end
+  object dsCustomer: TDataSource
+    DataSet = dmConnection.fdtClient
+    Left = 304
+    Top = 16
+  end
+  object dsState: TDataSource
+    DataSet = dmConnection.fdtState
+    Left = 376
+    Top = 16
+  end
+end
