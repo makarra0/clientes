@@ -325,7 +325,7 @@ object frmClient: TfrmClient
       Top = 6
       Width = 81
       Height = 25
-      Caption = '&Listagem'
+      Caption = '&Pesquisar'
       Flat = True
       Glyph.Data = {
         F6060000424DF606000000000000360000002800000018000000180000000100
@@ -416,7 +416,7 @@ object frmClient: TfrmClient
     Top = 8
   end
   object frxReport1: TfrxReport
-    Version = '2022.1.6'
+    Version = '2021.3.4'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]

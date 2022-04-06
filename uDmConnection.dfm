@@ -93,6 +93,7 @@ object dmConnection: TdmConnection
     BeforePost = fdtClientBeforePost
     IndexFieldNames = 'id'
     Connection = FDConnection1
+    UpdateOptions.UpdateTableName = 'clientes'
     TableName = 'clientes'
     Left = 88
     Top = 104
@@ -152,6 +153,7 @@ object dmConnection: TdmConnection
   object fdtCity: TFDTable
     IndexFieldNames = 'uf'
     Connection = FDConnection1
+    UpdateOptions.UpdateTableName = 'cidades'
     TableName = 'cidades'
     Left = 144
     Top = 104
@@ -197,6 +199,7 @@ object dmConnection: TdmConnection
   object fdtState: TFDTable
     IndexFieldNames = 'uf'
     Connection = FDConnection1
+    UpdateOptions.UpdateTableName = 'estados'
     TableName = 'estados'
     Left = 192
     Top = 104

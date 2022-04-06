@@ -148,12 +148,12 @@ begin
     end;
     1: begin
       dsClient.DataSet.Filtered := False;
-      dsClient.DataSet.Filter   := 'name LIKE ' + QuotedStr( '%' + Trim(edtSearch.Text) + '%' );
+      dsClient.DataSet.Filter   := 'upper(name) LIKE ' + QuotedStr( '%' + uppercase(Trim(edtSearch.Text)) + '%' );
       dsClient.DataSet.Filtered := True;
     end;
     2: begin
       dsClient.DataSet.Filtered := False;
-      dsClient.DataSet.Filter   := 'municipio LIKE ' + QuotedStr( '%' + Trim(edtSearch.Text) + '%' );
+      dsClient.DataSet.Filter   := 'upper(municipio) LIKE ' + QuotedStr( '%' + uppercase(Trim(edtSearch.Text)) + '%' );
       dsClient.DataSet.Filtered := True;
     end;
     3: begin
