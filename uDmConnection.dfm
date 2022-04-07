@@ -24,34 +24,31 @@ object dmConnection: TdmConnection
     Connection = FDConnection1
     SQL.Strings = (
       'SELECT * FROM clientes cl'
-      '      INNER JOIN cidades cd ON (cd.ibge7 = cl.city)'
-      '      INNER JOIN estados es ON (es.uf = cd.uf)')
-    Left = 24
-    Top = 104
+      '      ')
+    Left = 56
+    Top = 112
     object fdqSearchid: TFDAutoIncField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'id'
       Origin = 'id'
       ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = True
+      DisplayFormat = '0000'
+      EditFormat = '0000'
     end
     object fdqSearchname: TStringField
       DisplayLabel = 'Nome'
-      DisplayWidth = 100
       FieldName = 'name'
       Origin = 'name'
       Size = 200
     end
     object fdqSearchaddress: TStringField
       DisplayLabel = 'Endere'#231'o'
-      DisplayWidth = 100
       FieldName = 'address'
       Origin = 'address'
       Size = 200
     end
     object fdqSearchnumber: TStringField
       DisplayLabel = 'N'#250'mero'
-      DisplayWidth = 20
       FieldName = 'number'
       Origin = 'number'
       Size = 50
@@ -62,31 +59,67 @@ object dmConnection: TdmConnection
       Origin = 'district'
       Size = 100
     end
+    object fdqSearchcity: TStringField
+      DisplayLabel = 'Cidade'
+      FieldName = 'city'
+      Origin = 'city'
+      Size = 150
+    end
+    object fdqSearchstate: TStringField
+      DisplayLabel = 'Estado'
+      FieldName = 'state'
+      Origin = 'state'
+      FixedChar = True
+      Size = 2
+    end
+    object fdqSearchzip: TStringField
+      DisplayLabel = 'CEP'
+      FieldName = 'zip'
+      Origin = 'zip'
+      EditMask = '00.000\-999;0;_'
+      FixedChar = True
+      Size = 10
+    end
+    object fdqSearchcountry: TStringField
+      DisplayLabel = 'Pa'#237's'
+      FieldName = 'country'
+      Origin = 'country'
+      Size = 100
+    end
     object fdqSearchphone: TStringField
       DisplayLabel = 'Telefone'
       FieldName = 'phone'
       Origin = 'phone'
-      EditMask = '!\(99\) 0 0000-0000;0; '
+      EditMask = '!\(99\) 0.0000-0000;0;_'
     end
-    object fdqSearchmunicipio: TStringField
-      AutoGenerateValue = arDefault
-      DisplayLabel = 'Munic'#237'pio'
-      DisplayWidth = 100
-      FieldName = 'municipio'
-      Origin = 'municipio'
-      ProviderFlags = []
-      ReadOnly = True
-      Size = 200
-    end
-    object fdqSearchuf_1: TStringField
-      AutoGenerateValue = arDefault
-      DisplayLabel = 'Estado'
-      FieldName = 'uf_1'
-      Origin = 'uf'
-      ProviderFlags = []
-      ReadOnly = True
+    object fdqSearchtype: TStringField
+      DisplayLabel = 'Tipo Pessoa'
+      FieldName = 'type'
+      Origin = 'type'
+      OnGetText = fdqSearchtypeGetText
       FixedChar = True
-      Size = 2
+      Size = 1
+    end
+    object fdqSearchcpf_cnpj: TStringField
+      FieldName = 'cpf_cnpj'
+      Origin = 'cpf_cnpj'
+      OnGetText = fdqSearchcpf_cnpjGetText
+    end
+    object fdqSearchrg_ie: TStringField
+      FieldName = 'rg_ie'
+      Origin = 'rg_ie'
+    end
+    object fdqSearchdata_cadastro: TDateField
+      DisplayLabel = 'Data Cadastro'
+      FieldName = 'data_cadastro'
+      Origin = 'data_cadastro'
+      EditMask = '!99/99/0000;1; '
+    end
+    object fdqSearchativo: TBooleanField
+      DisplayLabel = 'Ativo'
+      FieldName = 'ativo'
+      Origin = 'ativo'
+      OnGetText = fdqSearchativoGetText
     end
   end
   object fdtClient: TFDTable
@@ -95,46 +128,45 @@ object dmConnection: TdmConnection
     Connection = FDConnection1
     UpdateOptions.UpdateTableName = 'clientes'
     TableName = 'clientes'
-    Left = 88
-    Top = 104
+    Left = 160
+    Top = 112
     object fdtClientid: TFDAutoIncField
+      DisplayLabel = 'C'#243'digo'
       FieldName = 'id'
       Origin = 'id'
       ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = True
+      DisplayFormat = '0000'
+      EditFormat = '0000'
     end
     object fdtClientname: TStringField
       DisplayLabel = 'Nome'
-      DisplayWidth = 80
       FieldName = 'name'
       Origin = 'name'
       Size = 200
     end
     object fdtClientaddress: TStringField
       DisplayLabel = 'Endere'#231'o'
-      DisplayWidth = 80
       FieldName = 'address'
       Origin = 'address'
       Size = 200
     end
     object fdtClientnumber: TStringField
       DisplayLabel = 'N'#250'mero'
-      DisplayWidth = 10
       FieldName = 'number'
       Origin = 'number'
       Size = 50
     end
     object fdtClientdistrict: TStringField
       DisplayLabel = 'Bairro'
-      DisplayWidth = 60
       FieldName = 'district'
       Origin = 'district'
       Size = 100
     end
-    object fdtClientcity: TLargeintField
+    object fdtClientcity: TStringField
       DisplayLabel = 'Cidade'
       FieldName = 'city'
       Origin = 'city'
+      Size = 150
     end
     object fdtClientstate: TStringField
       DisplayLabel = 'Estado'
@@ -143,95 +175,52 @@ object dmConnection: TdmConnection
       FixedChar = True
       Size = 2
     end
+    object fdtClientzip: TStringField
+      DisplayLabel = 'CEP'
+      DisplayWidth = 10
+      FieldName = 'zip'
+      Origin = 'zip'
+      EditMask = '00.000\-999;0;_'
+      FixedChar = True
+      Size = 10
+    end
+    object fdtClientcountry: TStringField
+      DisplayLabel = 'Pa'#237's'
+      FieldName = 'country'
+      Origin = 'country'
+      Size = 100
+    end
     object fdtClientphone: TStringField
       DisplayLabel = 'Telefone'
       FieldName = 'phone'
       Origin = 'phone'
-      EditMask = '!\(99\) 0 0000-0000;0;_'
+      EditMask = '!\(99\) 0.0000-0000;0;_'
     end
-  end
-  object fdtCity: TFDTable
-    IndexFieldNames = 'uf'
-    Connection = FDConnection1
-    UpdateOptions.UpdateTableName = 'cidades'
-    TableName = 'cidades'
-    Left = 144
-    Top = 104
-    object fdtCityibge7: TLargeintField
-      FieldName = 'ibge7'
-      Origin = 'ibge7'
-    end
-    object fdtCityuf: TStringField
-      FieldName = 'uf'
-      Origin = 'uf'
+    object fdtClienttype: TStringField
+      DisplayLabel = 'Tipo'
+      FieldName = 'type'
+      Origin = 'type'
       FixedChar = True
-      Size = 2
+      Size = 1
     end
-    object fdtCitymunicipio: TStringField
-      FieldName = 'municipio'
-      Origin = 'municipio'
-      Size = 200
+    object fdtClientcpf_cnpj: TStringField
+      FieldName = 'cpf_cnpj'
+      Origin = 'cpf_cnpj'
     end
-    object fdtCityibge: TLargeintField
-      FieldName = 'ibge'
-      Origin = 'ibge'
+    object fdtClientrg_ie: TStringField
+      FieldName = 'rg_ie'
+      Origin = 'rg_ie'
     end
-    object fdtCityregiao: TStringField
-      FieldName = 'regiao'
-      Origin = 'regiao'
-      Size = 100
+    object fdtClientdata_cadastro: TDateField
+      DisplayLabel = 'Data DCdastro'
+      FieldName = 'data_cadastro'
+      Origin = 'data_cadastro'
+      EditMask = '!99/99/0000;1; '
     end
-    object fdtCitypopulacao: TLargeintField
-      FieldName = 'populacao'
-      Origin = 'populacao'
-    end
-    object fdtCityporte: TStringField
-      FieldName = 'porte'
-      Origin = 'porte'
-      Size = 100
-    end
-    object fdtCitycapital: TStringField
-      FieldName = 'capital'
-      Origin = 'capital'
-      Size = 100
-    end
-  end
-  object fdtState: TFDTable
-    IndexFieldNames = 'uf'
-    Connection = FDConnection1
-    UpdateOptions.UpdateTableName = 'estados'
-    TableName = 'estados'
-    Left = 192
-    Top = 104
-    object fdtStateestado: TStringField
-      FieldName = 'estado'
-      Origin = 'estado'
-      Size = 200
-    end
-    object fdtStateuf: TStringField
-      FieldName = 'uf'
-      Origin = 'uf'
-      FixedChar = True
-      Size = 2
-    end
-    object fdtStateibge: TLargeintField
-      FieldName = 'ibge'
-      Origin = 'ibge'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-    end
-    object fdtStateregiao: TStringField
-      FieldName = 'regiao'
-      Origin = 'regiao'
-      Size = 100
-    end
-    object fdtStateqtdmun: TIntegerField
-      FieldName = 'qtdmun'
-      Origin = 'qtdmun'
-    end
-    object fdtStatesintaxe: TStringField
-      FieldName = 'sintaxe'
-      Origin = 'sintaxe'
-      Size = 50
+    object fdtClientativo: TBooleanField
+      DisplayLabel = 'Ativo'
+      FieldName = 'ativo'
+      Origin = 'ativo'
     end
   end
 end

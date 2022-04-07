@@ -1,151 +1,92 @@
 object frmCustomer: TfrmCustomer
   Left = 0
   Top = 0
+  ActiveControl = dbeCpfCnpj
   BorderStyle = bsDialog
   Caption = 'Cliente'
-  ClientHeight = 322
-  ClientWidth = 442
+  ClientHeight = 442
+  ClientWidth = 473
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 18
-    Top = 58
+    Left = 24
+    Top = 140
     Width = 27
     Height = 13
     Caption = 'Nome'
     FocusControl = DBEdit1
   end
-  object Label2: TLabel
-    Left = 18
-    Top = 96
-    Width = 45
+  object Label8: TLabel
+    Left = 25
+    Top = 47
+    Width = 33
     Height = 13
-    Caption = 'Endere'#231'o'
-    FocusControl = DBEdit2
+    Caption = 'C'#243'digo'
   end
-  object Label3: TLabel
-    Left = 345
-    Top = 96
-    Width = 37
+  object Label10: TLabel
+    Left = 290
+    Top = 47
+    Width = 44
     Height = 13
-    Caption = 'N'#250'mero'
-    FocusControl = DBEdit3
+    Caption = 'Situa'#231#227'o'
   end
-  object Label4: TLabel
-    Left = 18
-    Top = 135
-    Width = 28
+  object lblCpf: TLabel
+    Left = 23
+    Top = 91
+    Width = 19
     Height = 13
-    Caption = 'Bairro'
-    FocusControl = DBEdit4
+    Caption = 'CPF'
   end
-  object Label5: TLabel
-    Left = 174
-    Top = 176
-    Width = 80
+  object lblRg: TLabel
+    Left = 167
+    Top = 91
+    Width = 24
     Height = 13
-    Caption = 'Cidade'
+    Caption = 'rg_ie'
   end
-  object Label6: TLabel
-    Left = 18
-    Top = 176
-    Width = 54
+  object Label14: TLabel
+    Left = 344
+    Top = 47
+    Width = 70
     Height = 13
-    Caption = 'Estado'
+    Caption = 'Data Cadastro'
   end
   object Label7: TLabel
-    Left = 18
-    Top = 217
+    Left = 316
+    Top = 91
     Width = 42
     Height = 13
     Caption = 'Telefone'
     FocusControl = DBEdit7
   end
   object DBEdit1: TDBEdit
-    Left = 18
-    Top = 74
-    Width = 400
+    Left = 24
+    Top = 159
+    Width = 425
     Height = 21
     DataField = 'name'
     DataSource = dsCustomer
-    TabOrder = 0
-  end
-  object DBEdit2: TDBEdit
-    Left = 18
-    Top = 110
-    Width = 322
-    Height = 21
-    DataField = 'address'
-    DataSource = dsCustomer
-    TabOrder = 1
-  end
-  object DBEdit3: TDBEdit
-    Left = 345
-    Top = 110
-    Width = 73
-    Height = 21
-    DataField = 'number'
-    DataSource = dsCustomer
-    TabOrder = 2
-  end
-  object DBEdit4: TDBEdit
-    Left = 19
-    Top = 149
-    Width = 400
-    Height = 21
-    DataField = 'district'
-    DataSource = dsCustomer
-    TabOrder = 3
-  end
-  object DBEdit7: TDBEdit
-    Left = 18
-    Top = 236
-    Width = 150
-    Height = 21
-    DataField = 'phone'
-    DataSource = dsCustomer
-    TabOrder = 6
-  end
-  object DBLookupComboBox1: TDBLookupComboBox
-    Left = 18
-    Top = 192
-    Width = 150
-    Height = 21
-    DataField = 'state'
-    DataSource = dsCustomer
-    KeyField = 'uf'
-    ListField = 'estado'
-    ListSource = dsState
-    TabOrder = 4
-  end
-  object DBLookupComboBox2: TDBLookupComboBox
-    Left = 174
-    Top = 192
-    Width = 244
-    Height = 21
-    DataField = 'city'
-    DataSource = dsCustomer
-    KeyField = 'ibge7'
-    ListField = 'municipio'
-    ListSource = dsCity
-    TabOrder = 5
-    OnEnter = DBLookupComboBox2Enter
+    TabOrder = 7
+    OnExit = DBEdit1Exit
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 442
+    Width = 473
     Height = 41
     Align = alTop
     Caption = 'Dados do Cliente'
@@ -155,19 +96,18 @@ object frmCustomer: TfrmCustomer
     Font.Name = 'Times New Roman'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 7
-    ExplicitLeft = 56
-    ExplicitTop = 32
-    ExplicitWidth = 185
+    TabOrder = 9
+    ExplicitWidth = 442
   end
   object Panel2: TPanel
     Left = 0
-    Top = 278
-    Width = 442
+    Top = 398
+    Width = 473
     Height = 44
     Align = alBottom
-    TabOrder = 8
-    ExplicitTop = 279
+    TabOrder = 10
+    ExplicitTop = 278
+    ExplicitWidth = 442
     object BitBtn1: TBitBtn
       Left = 241
       Top = 4
@@ -360,19 +300,217 @@ object frmCustomer: TfrmCustomer
       OnClick = btnExcluirClick
     end
   end
+  object RgTipoPessoa: TRadioGroup
+    Left = 99
+    Top = 45
+    Width = 185
+    Height = 40
+    Caption = 'Tipo de Pessoa'
+    Columns = 2
+    ItemIndex = 0
+    Items.Strings = (
+      'F'#237'sica'
+      'Jur'#237'dica')
+    TabOrder = 1
+    TabStop = True
+    OnClick = RgTipoPessoaClick
+  end
+  object DBCheckBox1: TDBCheckBox
+    Left = 290
+    Top = 66
+    Width = 48
+    Height = 17
+    TabStop = False
+    Caption = 'Ativo'
+    DataField = 'ativo'
+    DataSource = dsCustomer
+    TabOrder = 2
+  end
+  object GroupBox1: TGroupBox
+    Left = 24
+    Top = 191
+    Width = 425
+    Height = 201
+    Caption = 'Endere'#231'o'
+    TabOrder = 8
+    TabStop = True
+    object Label2: TLabel
+      Left = 9
+      Top = 50
+      Width = 45
+      Height = 13
+      Caption = 'Endere'#231'o'
+      FocusControl = dbeEndereco
+    end
+    object Label3: TLabel
+      Left = 340
+      Top = 50
+      Width = 37
+      Height = 13
+      Caption = 'N'#250'mero'
+      FocusControl = dbeNumero
+    end
+    object Label4: TLabel
+      Left = 9
+      Top = 91
+      Width = 28
+      Height = 13
+      Caption = 'Bairro'
+      FocusControl = dbeBairro
+    end
+    object Label5: TLabel
+      Left = 9
+      Top = 132
+      Width = 33
+      Height = 13
+      Caption = 'Cidade'
+    end
+    object Label6: TLabel
+      Left = 232
+      Top = 132
+      Width = 33
+      Height = 13
+      Caption = 'Estado'
+    end
+    object Label9: TLabel
+      Left = 8
+      Top = 25
+      Width = 19
+      Height = 13
+      Caption = 'CEP'
+    end
+    object Label11: TLabel
+      Left = 292
+      Top = 132
+      Width = 19
+      Height = 13
+      Caption = 'Pa'#237's'
+    end
+    object dbeEndereco: TDBEdit
+      Left = 8
+      Top = 69
+      Width = 322
+      Height = 21
+      TabStop = False
+      DataField = 'address'
+      DataSource = dsCustomer
+      ReadOnly = True
+      TabOrder = 1
+    end
+    object dbeNumero: TDBEdit
+      Left = 336
+      Top = 69
+      Width = 73
+      Height = 21
+      DataField = 'number'
+      DataSource = dsCustomer
+      TabOrder = 2
+    end
+    object dbeBairro: TDBEdit
+      Left = 9
+      Top = 105
+      Width = 400
+      Height = 21
+      TabStop = False
+      DataField = 'district'
+      DataSource = dsCustomer
+      ReadOnly = True
+      TabOrder = 3
+    end
+    object dbeCep: TDBEdit
+      Left = 33
+      Top = 23
+      Width = 72
+      Height = 21
+      DataField = 'zip'
+      DataSource = dsCustomer
+      TabOrder = 0
+      OnExit = dbeCepExit
+    end
+    object dbeCidade: TDBEdit
+      Left = 9
+      Top = 151
+      Width = 217
+      Height = 21
+      TabStop = False
+      DataField = 'city'
+      DataSource = dsCustomer
+      ReadOnly = True
+      TabOrder = 4
+    end
+    object dbeEstado: TDBEdit
+      Left = 232
+      Top = 151
+      Width = 41
+      Height = 21
+      TabStop = False
+      DataField = 'state'
+      DataSource = dsCustomer
+      ReadOnly = True
+      TabOrder = 5
+    end
+    object dbePais: TDBEdit
+      Left = 288
+      Top = 151
+      Width = 121
+      Height = 21
+      DataField = 'country'
+      DataSource = dsCustomer
+      TabOrder = 6
+    end
+  end
+  object DBEdit7: TDBEdit
+    Left = 316
+    Top = 110
+    Width = 132
+    Height = 21
+    DataField = 'phone'
+    DataSource = dsCustomer
+    TabOrder = 6
+  end
+  object dbeCpfCnpj: TDBEdit
+    Left = 24
+    Top = 110
+    Width = 116
+    Height = 21
+    DataField = 'cpf_cnpj'
+    DataSource = dsCustomer
+    TabOrder = 4
+    OnExit = dbeCpfCnpjExit
+  end
+  object dbeDataCadastro: TDBEdit
+    Left = 344
+    Top = 64
+    Width = 104
+    Height = 21
+    TabStop = False
+    DataField = 'data_cadastro'
+    DataSource = dsCustomer
+    TabOrder = 3
+  end
+  object DBEdit3: TDBEdit
+    Left = 167
+    Top = 110
+    Width = 121
+    Height = 21
+    DataField = 'rg_ie'
+    DataSource = dsCustomer
+    TabOrder = 5
+  end
+  object dbeCodigo: TDBEdit
+    Left = 23
+    Top = 64
+    Width = 55
+    Height = 21
+    TabStop = False
+    DataField = 'id'
+    DataSource = dsCustomer
+    ReadOnly = True
+    TabOrder = 0
+  end
   object dsCustomer: TDataSource
     DataSet = dmConnection.fdtClient
-    Left = 290
-    Top = 26
-  end
-  object dsState: TDataSource
-    DataSet = dmConnection.fdtState
-    Left = 338
-    Top = 26
-  end
-  object dsCity: TDataSource
-    DataSet = dmConnection.fdtCity
-    Left = 394
-    Top = 26
+    Left = 408
+    Top = 10
   end
 end

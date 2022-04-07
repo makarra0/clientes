@@ -1,4 +1,4 @@
-unit uDmConnection;
+Ôªøunit uDmConnection;
 
 interface
 
@@ -7,9 +7,9 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
   FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
   FireDAC.Phys, FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef,
-  FireDAC.Stan.ExprFuncs, FireDAC.VCLUI.Wait,
+  FireDAC.Stan.ExprFuncs, FireDAC.VCLUI.Wait, inifiles, dialogs,
   FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
-  FireDAC.DApt, FireDAC.Comp.DataSet, FMX.Dialogs;
+  FireDAC.DApt, FireDAC.Comp.DataSet, FMX.Dialogs, System.RegularExpressions, InscricaoFiscal;
 
 type
   TdmConnection = class(TDataModule)
@@ -22,36 +22,41 @@ type
     fdtClientaddress: TStringField;
     fdtClientnumber: TStringField;
     fdtClientdistrict: TStringField;
-    fdtClientcity: TLargeintField;
+    fdtClientcity: TStringField;
     fdtClientstate: TStringField;
+    fdtClientzip: TStringField;
+    fdtClientcountry: TStringField;
     fdtClientphone: TStringField;
-    fdtCity: TFDTable;
-    fdtState: TFDTable;
-    fdtStateestado: TStringField;
-    fdtStateuf: TStringField;
-    fdtCityibge7: TLargeintField;
-    fdtCityuf: TStringField;
-    fdtCitymunicipio: TStringField;
-    fdtStateibge: TLargeintField;
-    fdtStateregiao: TStringField;
-    fdtStateqtdmun: TIntegerField;
-    fdtStatesintaxe: TStringField;
-    fdtCityibge: TLargeintField;
-    fdtCityregiao: TStringField;
-    fdtCitypopulacao: TLargeintField;
-    fdtCityporte: TStringField;
-    fdtCitycapital: TStringField;
+    fdtClienttype: TStringField;
+    fdtClientcpf_cnpj: TStringField;
+    fdtClientrg_ie: TStringField;
+    fdtClientdata_cadastro: TDateField;
+    fdtClientativo: TBooleanField;
     fdqSearchid: TFDAutoIncField;
     fdqSearchname: TStringField;
     fdqSearchaddress: TStringField;
     fdqSearchnumber: TStringField;
     fdqSearchdistrict: TStringField;
+    fdqSearchcity: TStringField;
+    fdqSearchstate: TStringField;
+    fdqSearchzip: TStringField;
+    fdqSearchcountry: TStringField;
     fdqSearchphone: TStringField;
-    fdqSearchmunicipio: TStringField;
-    fdqSearchuf_1: TStringField;
+    fdqSearchtype: TStringField;
+    fdqSearchcpf_cnpj: TStringField;
+    fdqSearchrg_ie: TStringField;
+    fdqSearchdata_cadastro: TDateField;
+    fdqSearchativo: TBooleanField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure fdtClientBeforePost(DataSet: TDataSet);
+    function ValidarCPF_CNPJ(documento : string; indice : integer; exibemsg : boolean) : String;
+    procedure fdqSearchcpf_cnpjGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure fdqSearchtypeGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure fdqSearchativoGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
   private
     { Private declarations }
   public
@@ -76,13 +81,46 @@ begin
     FDConnection1.Open;
   except
     on E :  EDatabaseError  do
-      ShowMessage( 'ExceÁ„o gerada com mensagem  ' +  E.Message );
+      ShowMessage( 'Exce√ß√£o gerada com mensagem  ' +  E.Message );
   end
 end;
 
 procedure TdmConnection.DataModuleDestroy(Sender: TObject);
 begin
   FDConnection1.Close;
+end;
+
+procedure TdmConnection.fdqSearchativoGetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+  if  Sender.DataSet.FieldByName('ativo').AsBoolean = True then
+      Text := 'Sim'
+  else
+      Text := 'N√£o';
+end;
+
+procedure TdmConnection.fdqSearchcpf_cnpjGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+  if  Sender.AsString <> '' then
+    begin
+      if  Sender.DataSet.FieldByName('type').AsString = 'F' then
+          Text := FormatFloat( '0##"."###"."###"-"##', StrToFloatDef(Sender.AsString, 0) )
+      else
+          Text := FormatFloat( '0#"."###"."###"/"####"-"##', StrToFloatDef(Sender.AsString, 0) );
+    end;
+end;
+
+procedure TdmConnection.fdqSearchtypeGetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+  if  Sender.AsString <> '' then
+  begin
+    if  Sender.DataSet.FieldByName('type').AsString = 'F' then
+        Text := 'F√≠sica'
+    else
+        Text := 'Jur√≠dica';
+  end;
 end;
 
 procedure TdmConnection.fdtClientBeforePost(DataSet: TDataSet);
@@ -94,7 +132,7 @@ begin
 
     DataSet.FieldByName('name').FocusControl;
 
-    DatabaseError('Nome n„o deve ser menor que 3 ou maior que 200 caracter ou em branco');
+    DatabaseError('Nome n√£o deve ser menor que 3 ou maior que 200 caracter ou em branco');
 
   end;
 
@@ -105,7 +143,7 @@ begin
 
     DataSet.FieldByName('address').FocusControl;
 
-    DatabaseError('EndereÁo n„o deve ser menor que 3 ou maior que 200 caracter ou em branco, favor informar');
+    DatabaseError('Endere√ßo n√£o deve ser menor que 3 ou maior que 200 caracter ou em branco, favor informar');
 
   end;
 
@@ -116,7 +154,7 @@ begin
 
     DataSet.FieldByName('number').FocusControl;
 
-    DatabaseError('N˙mero n„o deve ser menor que 3 ou maior que 200 caracter ou em branco, favor informar');
+    DatabaseError('N√∫mero n√£o deve ser menor que 3 ou maior que 200 caracter ou em branco, favor informar');
 
   end;
 
@@ -127,25 +165,7 @@ begin
 
     DataSet.FieldByName('district').FocusControl;
 
-    DatabaseError('Bairro n„o deve ser menor que 3 ou maior que 200 caracter ou em branco, favor informar');
-
-  end;
-
-  if (DataSet.FieldByName('city').AsInteger <= 0) then
-  begin
-
-    DataSet.FieldByName('city').FocusControl;
-
-    DatabaseError('Cidade deve ser informada.');
-
-  end;
-
-  if (length(DataSet.FieldByName('state').AsString) < 2 ) then
-  begin
-
-    DataSet.FieldByName('state').FocusControl;
-
-    DatabaseError('Estado deve ser informado');
+    DatabaseError('Bairro n√£o deve ser menor que 3 ou maior que 200 caracter ou em branco, favor informar');
 
   end;
 
@@ -156,10 +176,36 @@ begin
     DataSet.FieldByName('phone').FocusControl;
 
     DatabaseError(
-      'Telefone n„o deve ser menor que 3 ou maior que 200 caracter ou em branco, favor informar');
-
+      'Telefone n√£o deve ser menor que 3 ou maior que 200 caracter ou em branco, favor informar');
   end;
 
 end;
 
+function TdmConnection.ValidarCPF_CNPJ(documento: string; indice: integer;
+  exibemsg: boolean): String;
+var
+  cpf_cnpj: TInscricaoFiscal;
+begin
+  Result := '';
+  cpf_cnpj := nil;
+
+  try
+    case indice of
+      0 : cpf_cnpj := TCPF.Create;
+      1 : cpf_cnpj := TCNPJ.Create;
+    end;
+
+    if not Assigned(cpf_cnpj) then
+      Result := 'O tipo de pessoa n√£o foi definido';
+
+    if Assigned(cpf_cnpj) and not cpf_cnpj.DocumentoValido( documento ) then
+      Result := 'Documento inv√°lido';
+  finally
+    if Assigned(cpf_cnpj) then
+      cpf_cnpj.Free;
+  end;
+
+  if (Result <> '') and (exibemsg = True) then
+    messagedlg(Result, mtwarning, [mbok], 0);
+end;
 end.

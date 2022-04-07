@@ -6,7 +6,11 @@ uses
   uDmConnection in 'uDmConnection.pas' {dmConnection: TDataModule},
   Vcl.Themes,
   Vcl.Styles,
-  uCustomer in 'uCustomer.pas' {frmCustomer};
+  uCustomer in 'uCustomer.pas' {frmCustomer},
+  ViaCEP.Core in 'ViaCEP.Core.pas',
+  ViaCEP.Intf in 'ViaCEP.Intf.pas',
+  ViaCEP.Model in 'ViaCEP.Model.pas',
+  InscricaoFiscal in 'InscricaoFiscal.pas';
 
 {$R *.res}
 
